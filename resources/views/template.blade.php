@@ -39,7 +39,7 @@
     @auth
         <a href="{{ route('profile.edit') }}">Profile</a> |
         <a href="{{ route('create') }}">Create post</a> |
-        <a href="#">My posts</a> |
+        <a href="{{ route('home', ['user_id' => Auth::id()]) }}">My posts</a> |
         <a href="{{ route('logout') }}">Logout (test@gmail.com)</a>
     @endauth
 </nav>

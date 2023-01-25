@@ -11,10 +11,15 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::query()->orderBy('created_at', 'DESC')->paginate(5);
+        $userId = request()->get('user_id');
+        $posts = Post::query()->orderBy('created_at', 'DESC');
+
+        if($userId) {
+            $posts->where('user_id', $userId);
+        }
 
         return view('home', [
-            'posts' => $posts,
+            'posts' => $posts->paginate(5),
         ]);
     }
 

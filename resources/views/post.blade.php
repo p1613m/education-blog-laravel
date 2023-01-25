@@ -8,7 +8,7 @@
     <h1>{{ $post->title }}</h1>
     <img src="{{ $post->image_url }}" alt="" style="width: 400px">
     <p>
-        <a href="#" class="author">
+        <a href="{{ route('home', ['user_id' => $post->user_id]) }}" class="author">
             @if($post->user->avatar_url)
                 <img src="{{ $post->user->avatar_url }}" alt="">
             @endif
