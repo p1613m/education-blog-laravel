@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+/**
+ * Posts
+ */
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('post');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/create', [PostController::class, 'createForm'])->name('create');
+    Route::post('/create', [PostController::class, 'create'])->name('create.send');
+});
+
+
+
+/**
+ * Auth
+ */
 Route::get('/registration', [AuthController::class, 'registrationForm'])->name('registration');
 Route::post('/registration', [AuthController::class, 'registration'])->name('registration.send');
 
@@ -25,3 +38,4 @@ Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.send');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+

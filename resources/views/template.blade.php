@@ -34,7 +34,7 @@
     @endguest
 
     @auth
-        <a href="#">Create post</a> |
+        <a href="{{ route('create') }}">Create post</a> |
         <a href="#">My posts</a> |
         <a href="{{ route('logout') }}">Logout (test@gmail.com)</a>
     @endauth
