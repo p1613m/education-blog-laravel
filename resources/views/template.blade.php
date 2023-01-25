@@ -21,6 +21,9 @@
             border-radius: 50%;
             vertical-align: middle;
         }
+        nav[role="navigation"] svg {
+            display: none;
+        }
     </style>
 </head>
 <body>
