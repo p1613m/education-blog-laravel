@@ -9,6 +9,9 @@
     <img src="{{ $post->image_url }}" alt="" style="width: 400px">
     <p>
         <a href="#" class="author">
+            @if($post->user->avatar_url)
+                <img src="{{ $post->user->avatar_url }}" alt="">
+            @endif
             {{ $post->user->name }}
         </a>
         <br>

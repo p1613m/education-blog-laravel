@@ -7,6 +7,9 @@
             <h2>{{ $post->title }}</h2>
             <p>
                 <a href="#" class="author">
+                    @if($post->user->avatar_url)
+                        <img src="{{ $post->user->avatar_url }}" alt="">
+                    @endif
                     {{ $post->user->name }}
                 </a>
                 <br>

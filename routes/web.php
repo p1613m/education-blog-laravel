@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('delete');
     Route::get('/posts/{post}/edit', [PostController::class, 'editForm'])->name('edit');
     Route::post('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit.send');
+
+    /**
+     * Profile
+     */
+    Route::get('/profile', [ProfileController::class, 'editForm'])->name('profile.edit');
+    Route::post('/profile', [ProfileController::class, 'edit'])->name('profile.edit.send');
 });
 
 
