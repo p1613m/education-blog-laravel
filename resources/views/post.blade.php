@@ -18,6 +18,6 @@
     <p>{{ $post->content }}</p>
     @if($post->hasAccess())
         <a href="{{ route('delete', $post) }}">Delete</a> |
-        <a href="#">Edit</a>
+        <a href="{{ route('edit', $post) }}">Edit</a>
     @endif
 @endsection

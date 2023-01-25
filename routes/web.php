@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/create', [PostController::class, 'create'])->name('create.send');
 
     Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('delete');
+    Route::get('/posts/{post}/edit', [PostController::class, 'editForm'])->name('edit');
+    Route::post('/posts/{post}/edit', [PostController::class, 'edit'])->name('edit.send');
 });
 
 
