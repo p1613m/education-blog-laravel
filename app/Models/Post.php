@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
@@ -26,5 +27,10 @@ class Post extends Model
     public function getImageUrlAttribute()
     {
         return url(Storage::url($this->image_path));
+    }
+
+    public function hasAccess()
+    {
+        return Auth::id() === $this->user_id;
     }
 }

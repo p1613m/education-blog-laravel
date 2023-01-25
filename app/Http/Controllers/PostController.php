@@ -42,4 +42,13 @@ class PostController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function delete(Post $post)
+    {
+        if($post->hasAccess()) {
+            $post->delete();
+        }
+
+        return redirect()->route('home');
+    }
 }

@@ -1,3 +1,7 @@
+@php
+/** @var App\Models\Post $post */
+@endphp
+
 @extends('template')
 
 @section('content')
@@ -12,4 +16,8 @@
     </p>
     <p>{{ $post->description }}</p>
     <p>{{ $post->content }}</p>
+    @if($post->hasAccess())
+        <a href="{{ route('delete', $post) }}">Delete</a> |
+        <a href="#">Edit</a>
+    @endif
 @endsection
