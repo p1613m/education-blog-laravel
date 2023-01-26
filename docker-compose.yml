@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+    blog-db:
+        image: mysql:5.7
+        container_name: blog-db
+        hostname: ${DB_HOST}
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - ./.data/mysql:/var/lib/mysql
+
+    blog-phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: blog-phpmyadmin
+        restart: always
+        ports:
+            - "8888:80"
+        environment:
+            PMA_HOST: ${DB_HOST}
+            PMA_PORT: ${DB_PORT}
+            UPLOAD_LIMIT: 300M
+
+    blog-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        image: blog-app
+        container_name: blog-app
+        ports:
+            - "7777:80"
+        volumes:
+            - ./.docker/nginx/default.conf:/etc/nginx/http.d/default.conf
+            - ./.docker/php/php.ini:/usr/local/etc/php/php.ini
+            - ./.docker/supervisord.conf:/etc/supervisord.conf
+            - ./.docker/workers:/etc/supervisor/conf.d
+            - ./:/var/www
+            - /vendor
