@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,14 +42,9 @@ class PostController extends Controller
         return view('create');
     }
 
-    public function create(Request $request)
+    public function create(PostCreateRequest $request)
     {
-        $postData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'content' => 'required|string',
-            'image' => 'required|file|mimes:png,jpg',
-        ]);
+        $postData = $request->validated();
         $postData['image_path'] = $request->file('image')->store('public');
 
         Auth::user()->posts()->create($postData);
@@ -76,17 +73,12 @@ class PostController extends Controller
         ]);
     }
 
-    public function edit(Post $post, Request $request)
+    public function edit(Post $post, PostUpdateRequest $request)
     {
         if(!$post->hasAccess()) {
             return redirect()->route('home');
         }
-        $postData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'content' => 'required|string',
-            'image' => 'nullable|file|mimes:png,jpg',
-        ]);
+        $postData = $request->validated();
         if($request->file('image')) {
             Storage::delete($post->image_path);
             $postData['image_path'] = $request->file('image')->store('public');

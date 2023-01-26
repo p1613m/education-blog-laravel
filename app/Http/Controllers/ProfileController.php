@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,18 +18,12 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function edit(Request $request)
+    public function edit(ProfileUpdateRequest $request)
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $userData = $request->validate([
-            'name' => 'required|string|max:255',
-            'avatar' => 'nullable|file|mimes:png,jpg',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'new_password' => 'nullable|confirmed',
-            'old_password' => 'required_with:new_password'
-        ]);
+        $userData = $request->validated();
 
         if ($userData['new_password']) {
             if(Hash::check($userData['old_password'], $user->password)) {
