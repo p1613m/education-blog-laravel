@@ -12,10 +12,16 @@ class PostController extends Controller
     public function index()
     {
         $userId = request()->get('user_id');
-        $posts = Post::query()->orderBy('created_at', 'DESC');
+        $searchString = request()->get('query');
+        $orderDirection = request()->get('order', 'DESC');
+        $posts = Post::query()->orderBy('created_at', $orderDirection);
 
         if($userId) {
             $posts->where('user_id', $userId);
+        }
+
+        if($searchString) {
+            $posts->where('title', 'LIKE', "%$searchString%");
         }
 
         return view('home', [
